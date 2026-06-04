@@ -1,7 +1,7 @@
 <!DOCTYPE html><html class="light" lang="en"><head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Login | NAS Sentinel OS</title>
+    <title>Login | ZNX</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <!-- Google Fonts -->
@@ -223,56 +223,79 @@
                     <div class="w-10 h-10 bg-primary flex items-center justify-center rounded-lg">
                         <span class="material-symbols-outlined text-white" data-icon="shield" style="font-variation-settings: 'FILL' 1;">shield</span>
                     </div>
-                    <span class="text-headline-sm font-bold tracking-tight text-primary">NAS Sentinel OS</span>
+                    <span class="text-headline-sm font-bold tracking-tight text-primary">Zetware Network BoX</span>
                 </div>
             </div>
             <!-- Main Form Content -->
             <div class="flex-grow flex items-center justify-center px-margin-mobile">
                 <div class="w-full max-w-[440px]">
                     <div class="text-center mb-10">
-                        <h1 class="text-[32px] font-bold text-primary mb-2">Masuk NAS Sentinel</h1>
+                        <h1 class="text-[32px] font-bold text-primary mb-2">Masuk ZNX Sentinel</h1>
                     </div>
-                    <form class="space-y-6" id="loginForm" onsubmit="return false">
-                        <!-- Username -->
-                        <div class="space-y-2">
-                            <label class="block text-[14px] font-semibold text-primary ml-1" for="username">Operator ID</label>
-                            <div class="relative">
-                                <input class="w-full px-5 py-4 input-tinted rounded-input text-on-surface placeholder:text-outline" id="username" placeholder="Masukkan ID Operator" type="text">
-                            </div>
-                        </div>
-                        <!-- Password -->
-                        <div class="space-y-2">
-                            <label class="block text-[14px] font-semibold text-primary ml-1" for="password">Access Key</label>
-                            <div class="relative">
-                                <input class="w-full px-5 py-4 input-tinted rounded-input text-on-surface placeholder:text-outline pr-12" id="password" placeholder="Masukkan Kata Sandi" type="password">
-                                <button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors cursor-pointer" onclick="togglePasswordVisibility()" type="button">
-                                    <span class="material-symbols-outlined" data-icon="visibility" id="eyeIcon">visibility</span>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- Submit Button -->
-                        <button class="w-full font-bold text-[16px] py-4 rounded-full active:scale-[0.98] transition-all hover:brightness-105 flex items-center justify-center gap-2 group mt-4 bg-primary text-white" id="signInBtn" type="submit">
-                            <span class="">Masuk Akun</span>
-                            <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
-                        </button>
-                        <!-- Actions -->
-                        <div class="flex flex-col items-center gap-4 pt-4">
-                            <a class="text-[14px] font-semibold text-primary hover:underline" href="#">Perlu Bantuan?</a>
-                            <label class="flex items-center gap-2 cursor-pointer group">
-                                <input class="w-4 h-4 rounded-sm border-outline text-accent-gold focus:ring-accent-gold/20 cursor-pointer" type="checkbox">
-                                <span class="text-[14px] text-on-surface-variant group-hover:text-primary transition-colors">Keep Session Active</span>
-                            </label>
-                        </div>
-                    </form>
+
+                    @if (session('status'))
+                    <div class="mb-6 rounded-input bg-secondary-container px-4 py-3 text-center text-[14px] font-semibold text-on-secondary-container">
+                        {{ session('status') }}
+                    </div>
+                    @endif
+
+                    <livewire:auth.login />
+
+                    {{-- ##form login komponen livewire --}}
+
+
                 </div>
             </div>
+            {{-- <form class="space-y-6" id="loginForm" method="POST" action="{{ route('login.store') }}">
+                @csrf
+                <!-- Username -->
+                <div class="space-y-2">
+                    <label class="block text-[14px] font-semibold text-primary ml-1" for="email">Operator ID</label>
+                    <div class="relative">
+                        <input class="w-full px-5 py-4 input-tinted rounded-input text-on-surface placeholder:text-outline @error('email') border-error bg-white @enderror" id="email" name="email" value="{{ old('email') }}" placeholder="Masukkan ID Operator" type="email" required autofocus autocomplete="email">
+                    </div>
+                    @error('email')
+                    <p class="ml-1 text-[14px] font-semibold text-error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <!-- Password -->
+                <div class="space-y-2">
+                    <label class="block text-[14px] font-semibold text-primary ml-1" for="password">Access Key</label>
+                    <div class="relative">
+                        <input class="w-full px-5 py-4 input-tinted rounded-input text-on-surface placeholder:text-outline pr-12 @error('password') border-error bg-white @enderror" id="password" name="password" placeholder="Masukkan Kata Sandi" type="password" required autocomplete="current-password">
+                        <button class="absolute right-4 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors cursor-pointer" onclick="togglePasswordVisibility()" type="button">
+                            <span class="material-symbols-outlined" data-icon="visibility" id="eyeIcon">visibility</span>
+                        </button>
+                    </div>
+                    @error('password')
+                    <p class="ml-1 text-[14px] font-semibold text-error">{{ $message }}</p>
+                    @enderror
+                </div>
+                <!-- Submit Button -->
+                <button class="w-full font-bold text-[16px] py-4 rounded-full active:scale-[0.98] transition-all hover:brightness-105 flex items-center justify-center gap-2 group mt-4 bg-primary text-white" id="signInBtn" type="submit">
+                    <span class="">Masuk Akun</span>
+                    <span class="material-symbols-outlined transition-transform group-hover:translate-x-1" data-icon="arrow_forward">arrow_forward</span>
+                </button>
+                <!-- Actions -->
+                <div class="flex flex-col items-center gap-4 pt-4">
+                    @if (Route::has('password.request'))
+                    <a class="text-[14px] font-semibold text-primary hover:underline" href="{{ route('password.request') }}">Perlu Bantuan?</a>
+                    @endif
+                    <label class="flex items-center gap-2 cursor-pointer group">
+                        <input class="w-4 h-4 rounded-sm border-outline text-accent-gold focus:ring-accent-gold/20 cursor-pointer" type="checkbox" name="remember" @checked(old('remember'))>
+                        <span class="text-[14px] text-on-surface-variant group-hover:text-primary transition-colors">Keep Session Active</span>
+                    </label>
+                </div>
+            </form> --}}
+
+
             <!-- Floating Live Chat -->
-            {{-- <div class="absolute bottom-8 right-8">
+            <div class="absolute bottom-8 right-8">
                 <button class="live-chat-btn bg-accent-gold text-primary px-6 py-3 rounded-full flex items-center gap-2 font-bold text-[14px] hover:brightness-110 transition-all">
                     <span class="material-symbols-outlined text-[20px]" data-icon="chat">chat</span>
                     <span class="">NAS Live Chat</span>
                 </button>
-            </div> --}}
+            </div>
         </div>
     </div>
     <!-- Hidden metadata/scripts from source -->
@@ -296,8 +319,7 @@
         const signInBtn = document.getElementById('signInBtn');
         const loginForm = document.getElementById('loginForm');
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        loginForm.addEventListener('submit', () => {
             const originalText = signInBtn.querySelector('span:first-child').innerText;
             const originalIcon = signInBtn.querySelector('.material-symbols-outlined').innerText;
 
@@ -306,14 +328,6 @@
             signInBtn.querySelector('span:first-child').innerText = 'Memverifikasi...';
             signInBtn.querySelector('.material-symbols-outlined').innerText = 'sync';
             signInBtn.querySelector('.material-symbols-outlined').classList.add('animate-spin');
-
-            setTimeout(() => {
-                signInBtn.disabled = false;
-                signInBtn.classList.remove('opacity-80');
-                signInBtn.querySelector('span:first-child').innerText = originalText;
-                signInBtn.querySelector('.material-symbols-outlined').innerText = originalIcon;
-                signInBtn.querySelector('.material-symbols-outlined').classList.remove('animate-spin');
-            }, 1500);
         });
     </script>
 
