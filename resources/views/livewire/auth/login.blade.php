@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="light">
     <head>
-        @include('partials.head', ['title' => __('Login | NAS Sentinel OS')])
+        @include('partials.head', ['title' => __('Login')])
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
